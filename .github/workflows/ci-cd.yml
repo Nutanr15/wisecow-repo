@@ -2,7 +2,7 @@ name: CI/CD - Wisecow
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   build-and-push:
@@ -43,7 +43,7 @@ jobs:
     - name: Deploy to Minikube
       run: |
         kubectl create namespace wisecow --dry-run=client -o yaml | kubectl apply -f -
-        kubectl apply -f wisecow-service.yaml -n wisecow
+        kubectl apply -f k8s/wisecow-service.yaml -n wisecow
         kubectl apply -f wisecow-deployment.yaml -n wisecow
         kubectl -n wisecow set image deployment/wisecow wisecow=${{ needs.build-and-push.outputs.image }} --record
         kubectl -n wisecow rollout status deployment/wisecow --timeout=120s
