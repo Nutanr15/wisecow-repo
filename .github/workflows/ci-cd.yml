@@ -46,8 +46,8 @@ jobs:
         kubectl create namespace wisecow --dry-run=client -o yaml | kubectl apply -f -
         
         # Apply manifests (make sure they're in k8s/ folder)
-        kubectl apply -f wisecow-deployment.yaml -n wisecow
-        kubectl apply -f wisecow-service.yaml -n wisecow
+        kubectl apply -f k8s/wisecow-deployment.yaml -n wisecow
+        kubectl apply -f k8s/wisecow-service.yaml -n wisecow
 
         # Update deployment with new image
         kubectl -n wisecow set image deployment/wisecow wisecow=${{ needs.build-and-push.outputs.image }}
